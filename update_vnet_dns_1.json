@@ -79,6 +79,12 @@
       "metadata": {
         "Description": "The DNS address(es) of the DNS Server(s) used by the VNET"
       }
+    },
+    "LocationCode": {
+      "type": "string",
+      "metadata": {
+        "Description": "The code of the Azure region e.g. EUN, EUW, SAS"
+      }
     }
   },
   "resources": [
@@ -104,30 +110,45 @@
             "name": "[parameters('ADSubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('ADSubnetRange')]"
+            },
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('NSG-',parameters('LocationCode'),'-',parameters('ADSubnetName')))]"
             }
           },
           {
             "name": "[parameters('MGMTSubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('MGMTSubnetRange')]"
+            },
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('NSG-',parameters('LocationCode'),'-',parameters('MGMTSubnetName')))]"
             }
           },
           {
             "name": "[parameters('SCOMSubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('SCOMSubnetRange')]"
+            },
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('NSG-',parameters('LocationCode'),'-',parameters('SCOMSubnetName')))]"
             }
           },
           {
             "name": "[parameters('SCCMSubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('SCCMSubnetRange')]"
+            },
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('NSG-',parameters('LocationCode'),'-',parameters('SCCMSubnetName')))]"
             }
           },
           {
             "name": "[parameters('GatewaySubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('GatewaySubnetRange')]"
+            },
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat('NSG-',parameters('LocationCode'),'-',parameters('GatewaySubnetName')))]"
             }
           }
         ]
