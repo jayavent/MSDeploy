@@ -1,0 +1,137 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vNetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Virtual Network to Create"
+      }
+    },
+    "vNetAddressRange": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the new VNET in CIDR format"
+      }
+    },
+    "ADSubnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Active Directory subnet"
+      }
+    },
+    "MGMTSubnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Management subnet"
+      }
+    },
+    "SCOMSubnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the SCOM subnet"
+      }
+    },
+    "SCCMSubnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the SCCM subnet"
+      }
+    },
+    "GatewaySubnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Gateway subnet"
+      }
+    },
+    "ADSubnetRange": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      }
+    },
+    "MGMTSubnetRange": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      }
+    },
+    "SCOMSubnetRange": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      }
+    },
+    "SCCMSubnetRange": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      }
+    },
+    "GatewaySubnetRange": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      }
+    },
+    "DNSServerAddress": {
+      "type": "array",
+      "metadata": {
+        "Description": "The DNS address(es) of the DNS Server(s) used by the VNET"
+      }
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('vNetName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-05-01-preview",
+      "tags": {
+        "displayName": "vNet"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vNetAddressRange')]"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": "[parameters('DNSServerAddress')]"
+        },
+        "subnets": [
+          {
+            "name": "[parameters('ADSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('ADSubnetRange')]"
+            }
+          },
+          {
+            "name": "[parameters('MGMTSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('MGMTSubnetRange')]"
+            }
+          },
+          {
+            "name": "[parameters('SCOMSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('SCOMSubnetRange')]"
+            }
+          },
+          {
+            "name": "[parameters('SCCMSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('SCCMSubnetRange')]"
+            }
+          },
+          {
+            "name": "[parameters('GatewaySubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('GatewaySubnetRange')]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
